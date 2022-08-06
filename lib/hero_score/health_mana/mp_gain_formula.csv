@@ -1,0 +1,4 @@
+Type of Gain,Fixed Increase (MP),operation,INT & WIS-Based Increase,operation,Modifier
+Small,2,+,(0.6 * INT + 0.4 * WIS),*,0.075
+Regular,5,+,(0.6 * INT + 0.4 * WIS),*,0.150
+Large,9,+,(0.6 * INT + 0.4 * WIS),*,0.225
