@@ -28,7 +28,7 @@ def run(q: profession_quest_beta.ProfessionQuestBetaContract, cwd: str, address:
         terminate = True
 
     if not terminate:
-        # Loop through heroes in quests
+        # Loop through heroes in active quests
         # If multiple heroes on the same quest, completing the first one should be enough
         for active_quest in active_quests:
             # Checking if quest is done

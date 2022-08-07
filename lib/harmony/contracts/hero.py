@@ -12,32 +12,6 @@ class HeroContract(Harmony):
     def __init__(self, w3: Web3, rpc: str):
         super().__init__(w3, rpc, hero_contract_address, json.loads(hero_abi))
 
-    # Transactions (state change)
-    # def transfer(self, contract_address, hero_id, owner_private_key, owner_nonce, receiver_address, gas_price_gwei, tx_timeout_seconds, rpc_address, logger=None):
-    #     owner = contract.functions.ownerOf(hero_id).call()
-    #     if logger is not None:
-    #         logger.info("Hero's owner " + str(owner))
-
-    #     if owner != account.address:
-    #         raise Exception("Owner mismatch")
-
-    #     tx = contract.functions.transferFrom(owner, receiver_address, hero_id).buildTransaction(
-    #         {'gasPrice': w3.toWei(gas_price_gwei, 'gwei'), 'nonce': owner_nonce})
-    #     if logger is not None:
-    #         logger.debug("Signing transaction")
-    #     signed_tx = w3.eth.account.sign_transaction(tx, private_key=owner_private_key)
-    #     if logger is not None:
-    #         logger.debug("Sending transaction " + str(tx))
-    #     ret = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-    #     if logger is not None:
-    #         logger.debug("Transaction successfully sent !")
-    #         logger.info("Waiting for transaction " + block_explorer_link(contract_address, signed_tx.hash.hex()) + " to be mined")
-    #     tx_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash=signed_tx.hash, timeout=tx_timeout_seconds, poll_latency=2)
-    #     if logger is not None:
-    #         logger.info("Transaction mined !")
-    #     logger.info(str(tx_receipt))
-
-
     # Calls
     def get_owner(self, hero_id: int):
         return str(self.contract.functions.ownerOf(hero_id).call())
