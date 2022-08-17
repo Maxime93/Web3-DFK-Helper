@@ -120,7 +120,7 @@ def run(q: profession_quest_beta.ProfessionQuestBetaContract, h: hero.HeroContra
             m = f"Starting {quest} for {starter_hero} - {attempts} atempts"
             messages.append(m)
             logger.info(m)
-            tx_receipt = q.start_quest([starter_hero], attempts, address, logger)
+            tx_receipt = q.start_quest(quest, [starter_hero], attempts, address, logger)
             time.sleep(3)
 
             # Save tx to data

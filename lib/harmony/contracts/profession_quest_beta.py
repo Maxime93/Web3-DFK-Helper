@@ -6,6 +6,7 @@ from typing import List
 
 from lib.harmony.abis.profession_quest_v1 import profession_v1_abi, profession_v1_address
 from lib.harmony.abis.gardening import gardening_address
+from lib.harmony.abis.mining import mining_jewel_address
 from lib.harmony.chain import Harmony
 from lib.utils import utils
 from lib.utils.utils import UserAddress
@@ -18,7 +19,8 @@ class ProfessionQuestBetaContract(Harmony):
         # The multi_start_quest uses one of the contracts below.
         # This contract (self.contract_address) calls another contract (specific to a profession)
         self.quest_contracts = {
-            "gardening": gardening_address
+            "gardening": gardening_address,
+            "mining": mining_jewel_address
         }
 
     # Helper
@@ -88,7 +90,11 @@ class ProfessionQuestBetaContract(Harmony):
 
 
     # Transactions (state change)
-    def start_quest(self, hero_ids: List[int], attempts: List[int], address: utils.UserAddress, logger):
+    def start_quest(self, quest: str, hero_ids: List[int], attempts: List[int], address: utils.UserAddress, logger):
+        # Check if ask one of the correct quests
+        if quest not in self.quest_contracts.keys():
+            raise Exception(f"Sorry, only {self.quest_contracts.values()} quests supported")
+
         # Get my account
         account = self.w3.eth.account.privateKeyToAccount(address.key)
         self.w3.eth.default_account = account.address
@@ -99,7 +105,7 @@ class ProfessionQuestBetaContract(Harmony):
 
         # Make transaction
         transaction = self.contract.functions.startQuest(
-            hero_ids, self.quest_contracts["gardening"], attempts
+            hero_ids, self.quest_contracts[quest], attempts
         ).buildTransaction(
             {'gasPrice': gas, 'nonce': nonce})
 
@@ -121,7 +127,10 @@ class ProfessionQuestBetaContract(Harmony):
         return tx_receipt
 
 
-    def start_quest_with_data(self, data, hero_ids: List[int], attempts: int, address: UserAddress, logger: logging.Logger):
+    def start_quest_with_data(self, quest: str, data, hero_ids: List[int], attempts: int, address: UserAddress, logger: logging.Logger):
+        if quest not in self.quest_contracts.keys():
+            raise Exception(f"Sorry, only {self.quest_contracts.values()} quests supported")
+
         # Get my account
         account = self.w3.eth.account.privateKeyToAccount(address.key)
         self.w3.eth.default_account = account.address
