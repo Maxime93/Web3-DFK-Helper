@@ -116,17 +116,16 @@ def run(q: profession_quest_beta.ProfessionQuestBetaContract, h: hero.HeroContra
 
         attempts = 1
 
-        for starter_hero in selected_heros:
-            m = f"Starting {quest} for {starter_hero} - {attempts} atempts"
-            messages.append(m)
-            logger.info(m)
-            tx_receipt = q.start_quest([starter_hero], attempts, address, logger)
-            time.sleep(3)
+        m = f"Starting {quest} for {selected_heros} - {attempts} atempts"
+        messages.append(m)
+        logger.info(m)
+        tx_receipt = q.start_quest(quest, selected_heros, attempts, address, logger)
+        time.sleep(3)
 
-            # Save tx to data
-            utils.save_tx_receipt(tx_receipt, q.contract_address, cwd)
-            message = f"tx hash: {tx_receipt['transactionHash']}"
-            utils.post_message_discord(discord_configs["quest_channel"], "dfk", message)
+        # Save tx to data
+        utils.save_tx_receipt(tx_receipt, q.contract_address, cwd)
+        message = f"tx hash: {tx_receipt['transactionHash']}"
+        utils.post_message_discord(discord_configs["quest_channel"], "dfk", message)
 
     utils.post_message_discord(discord_configs["quest_channel"], "dfk", "\n".join(messages))
 
