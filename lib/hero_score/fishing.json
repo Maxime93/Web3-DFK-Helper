@@ -1,6 +1,0 @@
-{
-    "fishing": {"stats": ["agility", "luck"]},
-    "mining": {"stats": []},
-    "foraging": {"stats": []},
-    "gardening": {"stats": []}
-}
